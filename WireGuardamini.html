@@ -81,8 +81,21 @@
             color: white;
         }
         /* استایل دکمه پایین صفحه */
-        .footer-btn {\n            position: fixed;\n            bottom: 10px;\n            left: 50%;\n            transform: translateX(-50%);\n        }
-        .footer-btn button {\n            padding: 10px 20px;\n            font-size: 16px;\n            border: none;\n            cursor: pointer;\n            border-radius: 5px;\n            background-color: #2980b9;\n            color: white;\n        }
+        .footer-btn {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .footer-btn button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            background-color: #2980b9;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -194,7 +207,8 @@
             if (fileName === "") {
                 fileName = "wireguard";
             }
-            let blob = new Blob([text], { type: "text/plain" });
+            // تغییر نوع Blob به application/octet-stream جهت جلوگیری از اضافه شدن پسوند .txt
+            let blob = new Blob([text], { type: "application/octet-stream" });
             let a = document.createElement("a");
             a.href = URL.createObjectURL(blob);
             a.download = fileName + ".conf"; 
