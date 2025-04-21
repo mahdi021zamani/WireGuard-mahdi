@@ -117,14 +117,16 @@
     <script>
         // صفحه ورود
         function checkPassword() {
-            let password = document.getElementById("password").value;
-            if (password === "aminiyt") {
-                document.getElementById("loginPage").style.display = "none";
-                document.getElementById("mainPage").style.display = "block";
-            } else {
-                alert("رمز عبور اشتباه است!");
-            }
-        }
+    const passwords = ["mahdione71", "nafas", "mohammad", "adminAccess"]; // لیست رمزها
+    let password = document.getElementById("password").value;
+    
+    if (passwords.includes(password)) {
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("mainPage").style.display = "block";
+    } else {
+        alert("رمز عبور اشتباه است!");
+    }
+}
 
         // توابع اصلی همانند کد اولیه
         function getRandomIP() {
