@@ -8,18 +8,30 @@
         body {
             background: linear-gradient(to right, #141e30, #243b55);
             color: white;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             text-align: center;
             margin: 0;
-            padding-bottom: 60px; /* فاصله برای دکمه پایین صفحه */
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
         }
         .container {
             background-color: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            width: 60%;
-            margin: auto;
-            border-radius: 10px;
+            padding: 40px;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
             margin-top: 50px;
+            transition: all 0.3s ease;
+        }
+        h2 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: bold;
         }
         textarea {
             width: 100%;
@@ -28,107 +40,73 @@
             color: #0f0;
             padding: 10px;
             font-size: 14px;
+            border: none;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            resize: none;
+            font-family: monospace;
         }
         .btn {
-            padding: 10px 20px;
+            padding: 12px 25px;
             margin: 10px;
-            font-size: 16px;
+            font-size: 18px;
             border: none;
             cursor: pointer;
-            border-radius: 5px;
-        }
-        .generate-btn { background-color: blue; color: white; }
-        .copy-btn { background-color: green; color: white; }
-        .save-btn { background-color: orange; color: white; }
-        .input-box {
-            margin: 10px;
-            padding: 5px;
-            font-size: 14px;
-            width: 80%;
-            text-align: center;
-        }
-        /* استایل‌های صفحه ورود */
-        #loginPage {
-            display: block;
-        }
-        #mainPage {
-            display: none;
-        }
-        #loginContainer {
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            width: 40%;
-            margin: auto;
             border-radius: 10px;
-            margin-top: 100px;
+            transition: all 0.3s ease;
         }
-        #loginContainer input[type=password] {
+        .generate-btn { background-color: #3498db; color: white; }
+        .copy-btn { background-color: #2ecc71; color: white; }
+        .save-btn { background-color: #e67e22; color: white; }
+        .input-box {
             margin: 10px;
             padding: 10px;
             font-size: 16px;
             width: 80%;
             text-align: center;
-            border-radius: 5px;
-            border: none;
-        }
-        #loginContainer button {
-            padding: 10px 20px;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            background-color: #27ae60;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            background-color: #333;
             color: white;
         }
-        /* استایل دکمه پایین صفحه */
-        .footer-btn {\n            position: fixed;\n            bottom: 10px;\n            left: 50%;\n            transform: translateX(-50%);\n        }
-        .footer-btn button {\n            padding: 10px 20px;\n            font-size: 16px;\n            border: none;\n            cursor: pointer;\n            border-radius: 5px;\n            background-color: #2980b9;\n            color: white;\n        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+        .footer-btn {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .footer-btn button {
+            padding: 12px 25px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            background-color: #2980b9;
+            color: white;
+        }
+        .footer-btn button:hover {
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
-    <!-- صفحه ورود -->
-    <div id="loginPage">
-        <div id="loginContainer">
-            <h2>ورود</h2>
-            <input type="password" id="password" placeholder="رمز عبور را وارد کنید">
-            <br>
-            <button onclick="checkPassword()">ورود</button>
-        </div>
+    <div class="container">
+        <h2>تولید کانفیگ WireGuard</h2>
+        <textarea id="configOutput" readonly placeholder="کانفیگ در اینجا نمایش داده خواهد شد..."></textarea><br>
+        <button class="btn generate-btn" onclick="generateConfig()">ساخت کانفیگ</button>
+        <button class="btn copy-btn" onclick="copyToClipboard()">کپی</button><br>
+        <input type="text" id="fileName" class="input-box" placeholder="نام فایل را وارد کنید (بدون پسوند)"><br>
+        <button class="btn save-btn" onclick="saveToFile()">ذخیره کانفیگ</button>
     </div>
 
-    <!-- صفحه اصلی -->
-    <div id="mainPage">
-        <div class="container">
-            <h2>تولید کانفیگ WireGuard</h2>
-            <textarea id="configOutput" readonly></textarea><br>
-            <button class="btn generate-btn" onclick="generateConfig()">ساخت کانفیگ</button>
-            <button class="btn copy-btn" onclick="copyToClipboard()">کپی</button>
-            <br>
-            <input type="text" id="fileName" class="input-box" placeholder="نام فایل را وارد کنید (بدون پسوند)"><br>
-            <button class="btn save-btn" onclick="saveToFile()">ذخیره کانفیگ</button>
-        </div>
-    </div>
-
-    <!-- دکمه پایین صفحه -->
     <div class="footer-btn">
         <button onclick="window.open('https://t.me/asrnovin_ir', '_blank')">کانال سازنده</button>
     </div>
 
     <script>
-        // صفحه ورود
-        function checkPassword() {
-    const passwords = ["mahdione71", "nafas", "mohammad", "adminAccess"]; // لیست رمزها
-    let password = document.getElementById("password").value;
-    
-    if (passwords.includes(password)) {
-        document.getElementById("loginPage").style.display = "none";
-        document.getElementById("mainPage").style.display = "block";
-    } else {
-        alert("رمز عبور اشتباه است!");
-    }
-}
-
-        // توابع اصلی همانند کد اولیه
         function getRandomIP() {
             return Math.floor(Math.random() * 255) + "." +
                    Math.floor(Math.random() * 255) + "." +
